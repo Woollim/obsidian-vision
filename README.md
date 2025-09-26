@@ -1,94 +1,59 @@
-# Obsidian Sample Plugin
+# Vision – OCR Camera for Obsidian
+👉 Read this in [한국어](README.ko.md).
 
-This is a sample plugin for Obsidian (https://obsidian.md).
+Vision brings camera-powered optical character recognition (OCR) to Obsidian. Open the camera picker from the ribbon or command palette, capture an image that contains text, and drop the recognised text straight into your notes.
 
-This project uses TypeScript to provide type checking and documentation.
-The repo depends on the latest plugin API (obsidian.d.ts) in TypeScript Definition format, which contains TSDoc comments describing what it does.
+## Features
+- Capture text with a camera modal that works on desktop and mobile (uses the system file picker with camera support where available).
+- Choose how extracted text is inserted: append to the active note, replace the current selection, or create a brand-new note.
+- Switch between the built-in offline Tesseract OCR engine and Google Cloud Vision (requires an API key).
+- Localised interface available in English and Korean, selectable from the settings tab.
+- Ribbon icon and command palette entry (`Capture and extract text`) for quick access to the camera workflow.
 
-This sample plugin demonstrates some of the basic functionality the plugin API can do.
-- Adds a ribbon icon, which shows a Notice when clicked.
-- Adds a command "Open Sample Modal" which opens a Modal.
-- Adds a plugin setting tab to the settings page.
-- Registers a global click event and output 'click' to the console.
-- Registers a global interval which logs 'setInterval' to the console.
+## Requirements
+- Obsidian 0.15.0 or later.
+- For development builds: Node.js 18+ and npm.
+- Internet access only if you opt into Google Vision; the default Tesseract mode runs locally in the app.
 
-## First time developing plugins?
+## Installation
+**Manual installation**
+1. Run `npm run build` to produce `main.js`.
+2. Copy `main.js`, `manifest.json`, and `styles.css` (optional) into your vault at `<Vault>/.obsidian/plugins/vision/`.
+3. Reload Obsidian and enable **Vision** from **Settings → Community plugins**.
 
-Quick starting guide for new plugin devs:
+**Development setup**
+1. Install dependencies with `npm install`.
+2. Use `npm run dev` for watch mode while developing or `npm run build` for a production bundle.
+3. The entry point is `src/main.ts`; esbuild bundles the plugin to `main.js`.
 
-- Check if [someone already developed a plugin for what you want](https://obsidian.md/plugins)! There might be an existing plugin similar enough that you can partner up with.
-- Make a copy of this repo as a template with the "Use this template" button (login to GitHub if you don't see it).
-- Clone your repo to a local development folder. For convenience, you can place this folder in your `.obsidian/plugins/your-plugin-name` folder.
-- Install NodeJS, then run `npm i` in the command line under your repo folder.
-- Run `npm run dev` to compile your plugin from `main.ts` to `main.js`.
-- Make changes to `main.ts` (or create new `.ts` files). Those changes should be automatically compiled into `main.js`.
-- Reload Obsidian to load the new version of your plugin.
-- Enable plugin in settings window.
-- For updates to the Obsidian API run `npm update` in the command line under your repo folder.
+## Usage
+- **Ribbon icon**: Select the camera icon in the left ribbon to open the modal and capture or upload an image.
+- **Command palette**: Run `Capture and extract text` (`Ctrl/Cmd+P`) to open the same modal.
+- After OCR completes you will see a notice; the recognised text is inserted according to your chosen insertion mode.
 
-## Releasing new releases
+### Text insertion modes
+- `Append to current document`: Adds two newlines and the recognised text to the bottom of the active markdown file.
+- `Replace current selection`: Replaces the highlighted text in the active editor, or the entire note if nothing is selected.
+- `Create new note`: Creates a new note named `OCR-<timestamp>.md`, writes the recognised text, and opens it in a new leaf.
 
-- Update your `manifest.json` with your new version number, such as `1.0.1`, and the minimum Obsidian version required for your latest release.
-- Update your `versions.json` file with `"new-plugin-version": "minimum-obsidian-version"` so older versions of Obsidian can download an older version of your plugin that's compatible.
-- Create new GitHub release using your new version number as the "Tag version". Use the exact version number, don't include a prefix `v`. See here for an example: https://github.com/obsidianmd/obsidian-sample-plugin/releases
-- Upload the files `manifest.json`, `main.js`, `styles.css` as binary attachments. Note: The manifest.json file must be in two places, first the root path of your repository and also in the release.
-- Publish the release.
+## Settings overview
+- **Language** – Switch the plugin UI between English and Korean.
+- **OCR provider** – Select `Tesseract (Offline)` or `Google Vision API (Online)` and provide an API key when required.
+- **Text insertion** – Choose how OCR results are written back into Obsidian.
+- **Camera options** – Toggles for auto-focus and image quality are stored for future enhancements; they do not change the current capture flow yet.
+- **Image storage** – Optional toggle to specify a vault folder for saving captured images. Saving is not implemented in the current build, but the values are persisted for upcoming releases.
 
-> You can simplify the version bump process by running `npm version patch`, `npm version minor` or `npm version major` after updating `minAppVersion` manually in `manifest.json`.
-> The command will bump version in `manifest.json` and `package.json`, and add the entry for the new version to `versions.json`
+## OCR providers
+- **Tesseract (default)** – Uses `tesseract.js` bundled with the plugin. Works offline and loads the combined Korean/English language pack (`kor+eng`). The first run may take a moment while the worker initialises.
+- **Google Vision API** – Sends the captured image to Google Cloud Vision. Requires a valid API key and network connectivity. Errors from the API are surfaced in Obsidian notices.
 
-## Adding your plugin to the community plugin list
+## Known limitations
+- Camera capture relies on the browser-provided file picker. Desktop platforms usually show a file dialog; mobile browsers can open the device camera directly.
+- Camera auto-focus, image quality, and captured-image storage settings are placeholders today and will take effect in a future update.
 
-- Check the [plugin guidelines](https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines).
-- Publish an initial version.
-- Make sure you have a `README.md` file in the root of your repo.
-- Make a pull request at https://github.com/obsidianmd/obsidian-releases to add your plugin.
+## Development notes
+- Source code is organised under `src/` with separate modules for commands, UI, utilities, localisation, and settings.
+- The plugin dynamically imports heavy dependencies (like `tesseract.js`) only when needed to keep the initial load light.
 
-## How to use
-
-- Clone this repo.
-- Make sure your NodeJS is at least v16 (`node --version`).
-- `npm i` or `yarn` to install dependencies.
-- `npm run dev` to start compilation in watch mode.
-
-## Manually installing the plugin
-
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
-
-## Improve code quality with eslint (optional)
-- [ESLint](https://eslint.org/) is a tool that analyzes your code to quickly find problems. You can run ESLint against your plugin to find common bugs and ways to improve your code. 
-- To use eslint with this project, make sure to install eslint from terminal:
-  - `npm install -g eslint`
-- To use eslint to analyze this project use this command:
-  - `eslint main.ts`
-  - eslint will then create a report with suggestions for code improvement by file and line number.
-- If your source code is in a folder, such as `src`, you can use eslint with this command to analyze all files in that folder:
-  - `eslint ./src/`
-
-## Funding URL
-
-You can include funding URLs where people who use your plugin can financially support it.
-
-The simple way is to set the `fundingUrl` field to your link in your `manifest.json` file:
-
-```json
-{
-    "fundingUrl": "https://buymeacoffee.com"
-}
-```
-
-If you have multiple URLs, you can also do:
-
-```json
-{
-    "fundingUrl": {
-        "Buy Me a Coffee": "https://buymeacoffee.com",
-        "GitHub Sponsor": "https://github.com/sponsors",
-        "Patreon": "https://www.patreon.com/"
-    }
-}
-```
-
-## API Documentation
-
-See https://github.com/obsidianmd/obsidian-api
+## License
+Released under the Obsidian plugin license included in [`LICENSE`](LICENSE).
