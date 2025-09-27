@@ -7,7 +7,7 @@ const ko: Translation = {
 	languageDesc: "플러그인 인터페이스의 언어를 선택하세요.",
 
 	// Commands
-	captureText: "카메라로 텍스트 추출",
+	captureText: "사진 촬영 후 텍스트 추출",
 
 	// Settings
 	ocrSettings: "OCR 설정",
@@ -17,6 +17,9 @@ const ko: Translation = {
 	googleVisionOnline: "Google Vision API (온라인)",
 	googleVisionApiKey: "Google Vision API 키",
 	googleVisionApiKeyDesc: "Google Cloud Vision API 키를 입력하세요.",
+	googleVisionApiSetUp: "Google Vision 설정 안내",
+	googleVisionApiSetUpDesc: "Google Vision API 키 발급 과정을 단계별로 안내합니다.",
+	openSetup: "안내 보기",
 	textInsertionSettings: "텍스트 삽입 설정",
 	textInsertionMode: "텍스트 삽입 모드",
 	textInsertionModeDesc: "추출된 텍스트를 어떻게 삽입할지 선택하세요.",
@@ -28,6 +31,24 @@ const ko: Translation = {
 	saveCapturedImagesDesc: "OCR 처리에 사용된 이미지를 볼트에 저장합니다 (format: vision-image-yyyy-MM-dd-hh-mm-ss.jpg).",
 	imageStorageFolder: "이미지 저장 폴더",
 	imageStorageFolderDesc: "캡처된 이미지를 저장할 폴더 경로를 지정하세요.",
+
+	// Setup guide
+	googleVisionApiSetUpGuideTitle: "Google Vision API 설정",
+	googleVisionApiSetUpGuideSteps: [
+		"Google Cloud Console에 로그인해 OCR용으로 사용할 프로젝트를 만들거나 선택합니다.",
+		"프로젝트에 결제 계정이 연결되어 있는지 확인합니다. Vision API는 무료 할당량을 사용하더라도 결제 계정이 필요합니다.",
+		"APIs & Services → Library로 이동해 Vision API를 검색하고 Enable을 눌러 활성화합니다.",
+		"APIs & Services → Credentials에서 Create credentials → API key를 선택해 새 API 키를 생성합니다.",
+		"생성된 키를 복사하고, 필요하다면 Restrict key에서 Vision API와 사용하는 디바이스로 범위를 제한합니다.",
+		"Text Vision 설정의 Google Vision API 키 입력란에 키를 붙여넣고 저장합니다.",
+	],
+	googleVisionApiSetUpTipsTitle: "참고",
+	googleVisionApiSetUpTips: [
+		"키가 노출되거나 프로젝트를 변경하면 키를 폐기하고 새로 발급하세요.",
+		"무료 할당량 이후에는 요청 단위로 과금되므로 APIs & Services → Dashboard에서 사용량을 모니터링하세요.",
+	],
+	googleVisionApiSetUpDocsLabel: "Google Cloud Vision 설정 문서 열기",
+	googleVisionApiSetUpDocsUrl: "https://cloud.google.com/vision/docs/setup",
 
 	// Processing
 	textExtractionProcessing: "♻️ 텍스트 추출 중...",

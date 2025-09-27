@@ -1,62 +1,59 @@
-# Obsidian Text Vision – OCR Camera
+# Text Vision (OCR) for Obsidian
 👉 Read this in [한국어](README.ko.md).
 
-Obsidian Text Vision brings camera-powered optical character recognition (OCR) to Obsidian. Open the camera picker from the ribbon or command palette, capture an image that contains text, and drop the recognised text straight into your notes.
+## Author
+Maintained by [Woollim](https://github.com/Woollim).
+
+Text Vision adds camera-powered optical character recognition (OCR) to Obsidian. Launch the capture flow from the ribbon or command palette, snap or pick an image, and drop the recognised text straight into your notes.
 
 ## Features
-- Capture text with a camera modal that works on desktop and mobile (uses the system file picker with camera support where available).
-- Choose how extracted text is inserted: append to the active note, replace the current selection, or create a brand-new note.
-- Switch between the built-in offline Tesseract OCR engine and Google Cloud Vision (requires an API key).
-- Localised interface available in English and Korean, selectable from the settings tab.
-- Ribbon icon and command palette entry (`Capture and extract text`) for quick access to the camera workflow.
+- Camera-friendly capture modal that uses the system file picker (mobile devices open the camera directly when supported).
+- Flexible text insertion: append to the active note, replace the current selection, or create a new note named `Text Vision (yyyy-MM-dd-HH-mm-ss).md`.
+- Switch between the bundled offline Tesseract engine and Google Cloud Vision (requires an API key).
+- Optional vault storage for captured images with a configurable destination folder.
+- Settings tab includes an in-app setup guide to help you generate a Google Vision API key.
+- Built-in localisation for English and Korean, plus a ribbon icon and command palette entry (`Take photo and extract text`) for quick access.
 
 ## Requirements
 - Obsidian 0.15.0 or later.
-- For development builds: Node.js 18+ and npm.
 - Internet access only if you opt into Google Vision; the default Tesseract mode runs locally in the app.
 
-## Installation
-**Manual installation**
-1. Run `npm run build` to produce `main.js`.
-2. Copy `main.js`, `manifest.json`, and `styles.css` (optional) into your vault at `<Vault>/.obsidian/plugins/text-vision/`.
-3. Reload Obsidian and enable **Obsidian Text Vision** from **Settings → Community plugins**.
-
-**Development setup**
-1. Install dependencies with `npm install`.
-2. Use `npm run dev` for watch mode while developing or `npm run build` for a production bundle.
-3. The entry point is `src/main.ts`; esbuild bundles the plugin to `main.js`.
-
 ## Usage
-- **Ribbon icon**: Select the camera icon in the left ribbon to open the modal and capture or upload an image.
-- **Command palette**: Run `Capture and extract text` (`Ctrl/Cmd+P`) to open the same modal.
+- Ribbon icon: Select the camera icon in the left ribbon to open the capture modal and take or pick an image.
+- Command palette: Run `Take photo and extract text` (`Ctrl/Cmd+P`) to open the same modal.
 - After OCR completes you will see a notice; the recognised text is inserted according to your chosen insertion mode.
 
 ### Text insertion modes
 - `Append to current document`: Adds two newlines and the recognised text to the bottom of the active markdown file.
 - `Replace current selection`: Replaces the highlighted text in the active editor, or the entire note if nothing is selected.
-- `Create new note`: Creates a new note named `OCR-<timestamp>.md`, writes the recognised text, and opens it in a new leaf.
+- `Create new note`: Creates `Text Vision (yyyy-MM-dd-HH-mm-ss).md`, writes the recognised text, and opens it in a new leaf.
 
 ## Settings overview
-- **Language** – Switch the plugin UI between English and Korean.
-- **OCR provider** – Select `Tesseract (Offline)` or `Google Vision API (Online)` and provide an API key when required.
-- **Text insertion** – Choose how OCR results are written back into Obsidian.
-- **Camera options** – Toggles for auto-focus and image quality are stored for future enhancements; they do not change the current capture flow yet.
-- **Image storage** – Optional toggle to specify a vault folder for saving captured images. Saving is not implemented in the current build, but the values are persisted for upcoming releases.
+- Language – Switch the plugin UI between English and Korean.
+- OCR engine – Select `Tesseract (Offline)` or `Google Vision API (Online)`. Tesseract runs locally but delivers modest accuracy; choose Google Vision whenever you need reliable OCR results.
+- Google Vision API key – Appears when Google Vision is selected; stores the API key used for requests. Use the Setup guide button in the settings tab or follow the steps below:
+  1. Visit [Google Cloud Console](https://console.cloud.google.com/), sign in, and create a dedicated project for OCR (or reuse an existing one).
+  2. Ensure the project has a linked billing account; the Vision API requires billing even when you stay within free tier quotas.
+  3. Open APIs & Services → Library, search for *Vision API*, and click Enable.
+  4. Navigate to APIs & Services → Credentials, choose Create credentials → API key, and copy the generated key.
+  5. (Recommended) Select Restrict key, limit it to the *Vision API*, and add application restrictions that match your Obsidian environments.
+  6. Paste the key into Text Vision's Google Vision API key field and press Save.
+- Text insertion mode – Choose how OCR results are written back into Obsidian.
+- Save captured images – Toggle vault storage for the images you capture during OCR.
+- Image storage folder – Provide or pick a folder (autocompleted from your vault) for saving captured images. Defaults to `vision-images`.
 
-## OCR providers
-- **Tesseract (default)** – Uses `tesseract.js` bundled with the plugin. Works offline and loads the combined Korean/English language pack (`kor+eng`). The first run may take a moment while the worker initialises.
-- **Google Vision API** – Sends the captured image to Google Cloud Vision. Requires a valid API key and network connectivity. Errors from the API are surfaced in Obsidian notices.
+## OCR engines
+- Tesseract (default) – Uses `tesseract.js` bundled with the plugin. Works offline and loads the combined Korean/English language pack (`kor+eng`), but accuracy drops with handwriting, complex layouts, or low-light photos.
+- Google Vision API – Sends the captured image to Google Cloud Vision. Requires a valid API key and network connectivity but consistently yields the best recognition quality for detailed notes.
 
-## Known limitations
-- Camera capture relies on the browser-provided file picker. Desktop platforms usually show a file dialog; mobile browsers can open the device camera directly.
-- Camera auto-focus, image quality, and captured-image storage settings are placeholders today and will take effect in a future update.
+## Captured image storage
+- Images are saved to the configured folder when Save captured images is enabled. Files are named `image-vision-(yyyy-MM-dd-HH-mm-ss).<ext>`.
+- When the folder does not exist, the plugin creates it automatically in your vault.
 
 ## Development notes
-- Source code is organised under `src/` with separate modules for commands, UI, utilities, localisation, and settings.
-- The plugin dynamically imports heavy dependencies (like `tesseract.js`) only when needed to keep the initial load light.
-
-## Author
-Maintained by [woollim](https://github.com/woollim).
+- Source code is organised under `src/` with dedicated modules for commands, features, localisation, settings, and shared types.
+- Heavy dependencies such as `tesseract.js` are loaded on demand so the plugin stays lightweight at startup.
+- Build with esbuild through the npm scripts defined in `package.json`.
 
 ## License
 Released under the Obsidian plugin license included in [`LICENSE`](LICENSE).

@@ -1,6 +1,7 @@
 import { App, PluginSettingTab, Setting, TFolder } from 'obsidian';
 import VisionPlugin from '../main';
 import { setLanguage, t } from '../i18n';
+import { VisionSetupGuideModal } from './setup-guide-modal';
 
 export class VisionSettingTab extends PluginSettingTab {
 	plugin: VisionPlugin;
@@ -87,6 +88,15 @@ export class VisionSettingTab extends PluginSettingTab {
 						await this.plugin.saveSettings();
 					}));
 		}
+
+		new Setting(containerEl)
+			.setName(translation.googleVisionApiSetUp)
+			.setDesc(translation.googleVisionApiSetUpDesc)
+			.addButton(button => button
+				.setButtonText(translation.openSetup)
+				.onClick(() => {
+					new VisionSetupGuideModal(this.app).open();
+				}));
 
 		// 텍스트 삽입 설정 섹션
 		containerEl.createEl('h3', { text: translation.textInsertionSettings });
