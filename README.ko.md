@@ -1,7 +1,7 @@
-# Vision – Obsidian용 OCR 카메라
+# Obsidian Text Vision – OCR 카메라
 👉 Read this in [English](README.md).
 
-Vision 플러그인은 Obsidian에서 카메라 기반 광학 문자 인식(OCR)을 제공합니다. 리본 아이콘이나 명령 팔레트에서 카메라 모달을 열어 텍스트가 포함된 이미지를 촬영하거나 선택한 뒤, 인식된 텍스트를 곧바로 노트에 삽입할 수 있습니다.
+Obsidian Text Vision 플러그인은 Obsidian에서 카메라 기반 광학 문자 인식(OCR)을 제공합니다. 리본 아이콘이나 명령 팔레트에서 카메라 모달을 열어 텍스트가 포함된 이미지를 촬영하거나 선택한 뒤, 인식된 텍스트를 곧바로 노트에 삽입할 수 있습니다.
 
 ## 주요 기능
 - 데스크톱과 모바일에서 동작하는 카메라 모달을 통해 이미지를 촬영하거나 선택하고 텍스트를 추출합니다(디바이스에서 제공하는 파일/카메라 선택기를 사용).
@@ -18,8 +18,8 @@ Vision 플러그인은 Obsidian에서 카메라 기반 광학 문자 인식(OCR)
 ## 설치 방법
 **수동 설치**
 1. `npm run build`를 실행해 `main.js`를 생성합니다.
-2. `main.js`, `manifest.json`, `styles.css`(선택 사항)을 볼트의 `<Vault>/.obsidian/plugins/vision/` 경로에 복사합니다.
-3. Obsidian을 다시 불러온 뒤 **설정 → 커뮤니티 플러그인**에서 **Vision** 플러그인을 활성화합니다.
+2. `main.js`, `manifest.json`, `styles.css`(선택 사항)을 볼트의 `<Vault>/.obsidian/plugins/text-vision/` 경로에 복사합니다.
+3. Obsidian을 다시 불러온 뒤 **설정 → 커뮤니티 플러그인**에서 **Obsidian Text Vision** 플러그인을 활성화합니다.
 
 **개발 환경 구성**
 1. `npm install`로 의존성을 설치합니다.
@@ -54,6 +54,9 @@ Vision 플러그인은 Obsidian에서 카메라 기반 광학 문자 인식(OCR)
 ## 개발 메모
 - 소스 코드는 `src/` 디렉터리에서 명령, UI, 유틸리티, 지역화, 설정 등 역할별로 분리되어 있습니다.
 - `tesseract.js`와 같은 무거운 의존성은 필요할 때만 동적으로 불러 초기 로딩 시간을 최소화합니다.
+
+## 작성자
+[woollim](https://github.com/woollim) with Codex, Claude
 
 ## 라이선스
 [`LICENSE`](LICENSE)에 포함된 Obsidian 플러그인 라이선스를 따릅니다.

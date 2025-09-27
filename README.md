@@ -1,7 +1,7 @@
-# Vision – OCR Camera for Obsidian
+# Obsidian Text Vision – OCR Camera
 👉 Read this in [한국어](README.ko.md).
 
-Vision brings camera-powered optical character recognition (OCR) to Obsidian. Open the camera picker from the ribbon or command palette, capture an image that contains text, and drop the recognised text straight into your notes.
+Obsidian Text Vision brings camera-powered optical character recognition (OCR) to Obsidian. Open the camera picker from the ribbon or command palette, capture an image that contains text, and drop the recognised text straight into your notes.
 
 ## Features
 - Capture text with a camera modal that works on desktop and mobile (uses the system file picker with camera support where available).
@@ -18,8 +18,8 @@ Vision brings camera-powered optical character recognition (OCR) to Obsidian. Op
 ## Installation
 **Manual installation**
 1. Run `npm run build` to produce `main.js`.
-2. Copy `main.js`, `manifest.json`, and `styles.css` (optional) into your vault at `<Vault>/.obsidian/plugins/vision/`.
-3. Reload Obsidian and enable **Vision** from **Settings → Community plugins**.
+2. Copy `main.js`, `manifest.json`, and `styles.css` (optional) into your vault at `<Vault>/.obsidian/plugins/text-vision/`.
+3. Reload Obsidian and enable **Obsidian Text Vision** from **Settings → Community plugins**.
 
 **Development setup**
 1. Install dependencies with `npm install`.
@@ -54,6 +54,9 @@ Vision brings camera-powered optical character recognition (OCR) to Obsidian. Op
 ## Development notes
 - Source code is organised under `src/` with separate modules for commands, UI, utilities, localisation, and settings.
 - The plugin dynamically imports heavy dependencies (like `tesseract.js`) only when needed to keep the initial load light.
+
+## Author
+Maintained by [woollim](https://github.com/woollim).
 
 ## License
 Released under the Obsidian plugin license included in [`LICENSE`](LICENSE).
