@@ -1,4 +1,10 @@
 # Text Vision (OCR) – Obsidian 플러그인
+
+<video width="600" controls>
+  <source src="assets/usage-video.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 👉 Read this in [English](README.md).
 
 ## 작성자
