@@ -3,7 +3,7 @@
 	"name": "Text Vision (OCR)",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "Camera-based OCR text extraction plugin for Obsidian. Capture photos and extract text using Tesseract or Google Vision API.",
+	"description": "Camera-based OCR text extraction plugin. Capture photos and extract text using Tesseract or Google Vision API.",
 	"author": "Woollim",
 	"isDesktopOnly": false
 }

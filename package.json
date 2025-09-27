@@ -1,7 +1,7 @@
 {
 	"name": "text-vision",
 	"version": "1.0.0",
-	"description": "Camera-based OCR text extraction plugin",
+	"description": "Camera-based OCR text extraction plugin. Capture photos and extract text using Tesseract or Google Vision API.",
 	"main": "main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
