@@ -358,3 +358,8 @@ datalist option[selected] {
     background-color: var(--interactive-accent-hover);
     color: white;
 }
+
+/* 숨겨진 파일 입력 요소 */
+.vision-hidden-file-input {
+    display: none;
+}

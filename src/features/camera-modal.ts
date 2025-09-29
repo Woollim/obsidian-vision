@@ -27,7 +27,7 @@ export class CameraCapture {
 		this.fileInput.type = 'file';
 		this.fileInput.accept = 'image/*';
 		this.fileInput.capture = 'camera'; // 모바일에서 카메라 직접 열기
-		this.fileInput.style.display = 'none';
+		this.fileInput.className = 'vision-hidden-file-input';
 
 		this.fileInput.addEventListener('change', (event) => {
 			this.handleFileCapture(event as Event);

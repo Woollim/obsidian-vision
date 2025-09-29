@@ -1,3 +1,4 @@
+import { requestUrl } from 'obsidian';
 import { OCRResult } from '../types';
 import { t } from '../i18n';
 
@@ -48,7 +49,8 @@ async function extractWithGoogleVision(imageDataUrl: string, apiKey: string): Pr
 		// Base64 데이터에서 헤더 제거
 		const base64Image = imageDataUrl.replace(/^data:image\/[a-z]+;base64,/, '');
 		
-		const response = await fetch(`https://vision.googleapis.com/v1/images:annotate?key=${apiKey}`, {
+		const response = await requestUrl({
+			url: `https://vision.googleapis.com/v1/images:annotate?key=${apiKey}`,
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
